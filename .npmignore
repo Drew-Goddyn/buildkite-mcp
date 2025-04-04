@@ -8,6 +8,8 @@ mcp.json.sample
 # Tests
 test/
 __tests__/
+test.js
+test-*.js
 
 # Documentation
 docs/
