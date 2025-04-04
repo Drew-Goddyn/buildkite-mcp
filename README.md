@@ -46,8 +46,7 @@ The server requires a Buildkite access token with appropriate permissions. You c
         "@drew-goddyn/buildkite-mcp"
       ],
       "env": {
-        "BUILDKITE_ACCESS_TOKEN": "your-buildkite-access-token",
-        "PORT": "3000"
+        "BUILDKITE_ACCESS_TOKEN": "your-buildkite-access-token"
       }
     }
   }
@@ -280,7 +279,7 @@ To run the server locally:
 BUILDKITE_ACCESS_TOKEN=your-token npm start
 ```
 
-The server will start on port 3000 by default, or you can set a custom port with the `PORT` environment variable.
+The server will automatically select an available port, or you can still specify a custom port with the `PORT` environment variable if needed.
 
 ## Error Handling
 

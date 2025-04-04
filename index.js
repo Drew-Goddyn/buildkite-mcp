@@ -6,7 +6,10 @@ const axios = require('axios');
 require('dotenv').config();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+// Remove explicit PORT declaration to let the server use a dynamic port
+// This aligns with how other MCP servers work
+// For backward compatibility, still allow PORT override
+const PORT = process.env.PORT || 0; // Use port 0 to let the OS assign an available port
 
 // Middleware
 app.use(bodyParser.json());
@@ -294,8 +297,9 @@ app.post('/mcp_buildkite_list_job_spec_failures', async (req, res) => {
 });
 
 // Start the server
-app.listen(PORT, () => {
-  console.log(`Buildkite MCP server running on port ${PORT}`);
+const server = app.listen(PORT, () => {
+  const actualPort = server.address().port;
+  console.log(`Buildkite MCP server running on port ${actualPort}`);
   console.log(`Server is using Buildkite API with token: ${process.env.BUILDKITE_ACCESS_TOKEN ? 'PROVIDED' : 'MISSING'}`);
 });
 
