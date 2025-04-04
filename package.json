@@ -1,6 +1,6 @@
 {
   "name": "@drew-goddyn/buildkite-mcp",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Buildkite MCP server for accessing builds and jobs",
   "main": "index.js",
   "bin": {
