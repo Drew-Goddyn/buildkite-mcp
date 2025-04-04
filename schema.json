@@ -1,0 +1,241 @@
+{
+  "functions": [
+    {
+      "name": "mcp_buildkite_list_organizations",
+      "description": "List all organizations the authenticated user has access to",
+      "parameters": {
+        "type": "object",
+        "properties": {}
+      }
+    },
+    {
+      "name": "mcp_buildkite_list_pipelines",
+      "description": "List all pipelines in an organization",
+      "parameters": {
+        "type": "object",
+        "required": ["organization"],
+        "properties": {
+          "organization": {
+            "type": "string",
+            "description": "The Buildkite organization slug"
+          }
+        }
+      }
+    },
+    {
+      "name": "mcp_buildkite_list_builds",
+      "description": "List builds from a Buildkite pipeline with optional filtering",
+      "parameters": {
+        "type": "object",
+        "required": ["organization", "pipeline"],
+        "properties": {
+          "organization": {
+            "type": "string",
+            "description": "The Buildkite organization slug"
+          },
+          "pipeline": {
+            "type": "string",
+            "description": "The Buildkite pipeline slug"
+          },
+          "per_page": {
+            "type": "number",
+            "description": "Number of builds to return per page (default: 10)",
+            "default": 10
+          },
+          "page": {
+            "type": "number",
+            "description": "Page number for pagination (default: 1)",
+            "default": 1
+          },
+          "branch": {
+            "type": "string",
+            "description": "Filter builds by branch"
+          },
+          "state": {
+            "type": "string",
+            "description": "Filter builds by state (running, scheduled, passed, failed, canceled, skipped, not_run)",
+            "enum": ["running", "scheduled", "passed", "failed", "canceled", "skipped", "not_run"]
+          }
+        }
+      }
+    },
+    {
+      "name": "mcp_buildkite_get_build",
+      "description": "Get detailed information about a specific build",
+      "parameters": {
+        "type": "object",
+        "required": ["organization", "pipeline", "build_number"],
+        "properties": {
+          "organization": {
+            "type": "string",
+            "description": "The Buildkite organization slug"
+          },
+          "pipeline": {
+            "type": "string",
+            "description": "The Buildkite pipeline slug"
+          },
+          "build_number": {
+            "type": "number",
+            "description": "The build number to retrieve"
+          }
+        }
+      }
+    },
+    {
+      "name": "mcp_buildkite_list_jobs",
+      "description": "List all jobs from a build regardless of status",
+      "parameters": {
+        "type": "object",
+        "required": ["organization", "pipeline", "build_number"],
+        "properties": {
+          "organization": {
+            "type": "string",
+            "description": "The Buildkite organization slug"
+          },
+          "pipeline": {
+            "type": "string",
+            "description": "The Buildkite pipeline slug"
+          },
+          "build_number": {
+            "type": "number",
+            "description": "The build number to retrieve jobs from"
+          }
+        }
+      }
+    },
+    {
+      "name": "mcp_buildkite_list_failed_jobs",
+      "description": "List only failed jobs from a build for quick failure analysis",
+      "parameters": {
+        "type": "object",
+        "required": ["organization", "pipeline", "build_number"],
+        "properties": {
+          "organization": {
+            "type": "string",
+            "description": "The Buildkite organization slug"
+          },
+          "pipeline": {
+            "type": "string",
+            "description": "The Buildkite pipeline slug"
+          },
+          "build_number": {
+            "type": "number",
+            "description": "The build number to retrieve failed jobs from"
+          }
+        }
+      }
+    },
+    {
+      "name": "mcp_buildkite_get_job_log",
+      "description": "Get the full console output logs for a specific job",
+      "parameters": {
+        "type": "object",
+        "required": ["organization", "pipeline", "build_number", "job_id"],
+        "properties": {
+          "organization": {
+            "type": "string",
+            "description": "The Buildkite organization slug"
+          },
+          "pipeline": {
+            "type": "string",
+            "description": "The Buildkite pipeline slug"
+          },
+          "build_number": {
+            "type": "number",
+            "description": "The build number"
+          },
+          "job_id": {
+            "type": "string",
+            "description": "The job ID to retrieve logs from"
+          }
+        }
+      }
+    },
+    {
+      "name": "mcp_buildkite_retry_job",
+      "description": "Retry a specific failed job in a build",
+      "parameters": {
+        "type": "object",
+        "required": ["organization", "pipeline", "build_number", "job_id"],
+        "properties": {
+          "organization": {
+            "type": "string",
+            "description": "The Buildkite organization slug"
+          },
+          "pipeline": {
+            "type": "string",
+            "description": "The Buildkite pipeline slug"
+          },
+          "build_number": {
+            "type": "number",
+            "description": "The build number containing the job"
+          },
+          "job_id": {
+            "type": "string",
+            "description": "The job ID to retry"
+          }
+        }
+      }
+    },
+    {
+      "name": "mcp_buildkite_list_pipeline_build_failures",
+      "description": "List build failures from a specific pipeline for quick failure analysis",
+      "parameters": {
+        "type": "object",
+        "required": ["organization", "pipeline"],
+        "properties": {
+          "organization": {
+            "type": "string",
+            "description": "The Buildkite organization slug"
+          },
+          "pipeline": {
+            "type": "string",
+            "description": "The Buildkite pipeline slug"
+          },
+          "state": {
+            "type": "string",
+            "description": "Filter builds by state (default: finished)",
+            "enum": ["running", "scheduled", "passed", "failed", "canceled", "skipped", "not_run", "finished", "broken"],
+            "default": "finished"
+          },
+          "per_page": {
+            "type": "number",
+            "description": "Number of builds to return per page (default: 20)",
+            "default": 20
+          },
+          "page": {
+            "type": "number",
+            "description": "Page number for pagination (default: 1)",
+            "default": 1
+          }
+        }
+      }
+    },
+    {
+      "name": "mcp_buildkite_list_job_spec_failures",
+      "description": "Extract test spec failures from a specific job in a pipeline",
+      "parameters": {
+        "type": "object",
+        "required": ["organization", "pipeline", "build_number", "job_id"],
+        "properties": {
+          "organization": {
+            "type": "string",
+            "description": "The Buildkite organization slug"
+          },
+          "pipeline": {
+            "type": "string",
+            "description": "The Buildkite pipeline slug"
+          },
+          "build_number": {
+            "type": "number",
+            "description": "The build number to analyze"
+          },
+          "job_id": {
+            "type": "string",
+            "description": "The job ID to extract spec failures from"
+          }
+        }
+      }
+    }
+  ]
+} 

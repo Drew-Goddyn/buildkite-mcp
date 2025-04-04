@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "buildkite": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-buildkite"
+      ],
+      "env": {
+        "BUILDKITE_ACCESS_TOKEN": "your-buildkite-access-token"
+      }
+    }
+  }
+} 
