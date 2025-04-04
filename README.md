@@ -11,35 +11,31 @@ A microservice for retrieving information from Buildkite via Model Context Proto
 
 ## Using with Cursor (MCP Integration)
 
-To add this server to Cursor, you'll need to configure it in your `mcp.json` file:
-
-1. Install the package globally: `npm install -g @drew-goddyn/buildkite-mcp`
-2. Set up the Buildkite token in your environment: `export BUILDKITE_ACCESS_TOKEN=your_token_here`
-3. Start the server (you can run it in the background): `BUILDKITE_ACCESS_TOKEN=your_token_here mcp-server-buildkite &`
-4. Add the server configuration to your Cursor MCP configuration file:
+To add this server to Cursor, you need to configure it in your `~/.cursor/config/mcp.json` file:
 
 ```json
-// ~/.cursor/config/mcp.json
 {
-  "servers": [
-    // Your other servers...
-    {
-      "name": "buildkite",
-      "url": "http://localhost:63330",
-      "spec": {
-        "url": "https://raw.githubusercontent.com/Drew-Goddyn/buildkite-mcp/main/schema.json"
-      },
-      "auth": {
-        "type": "none"
+  "mcpServers": {
+    "buildkite": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@drew-goddyn/buildkite-mcp"
+      ],
+      "env": {
+        "BUILDKITE_ACCESS_TOKEN": "your-buildkite-access-token"
       }
     }
-  ]
+  }
 }
 ```
 
-5. Restart Cursor to apply the changes
+With this configuration:
+- You don't need to install or run the server manually
+- Cursor will automatically start and stop the server as needed
+- Replace `your-buildkite-access-token` with your actual Buildkite API token
 
-You can now use Buildkite endpoints in your Cursor workflows!
+After updating the configuration, restart Cursor to apply the changes.
 
 ## MCP Endpoints
 
